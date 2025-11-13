@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bonimini | Os melhores salgados de Bonito-MS</title>
+  <style>
+    :root{--accent:#25D366;--dark:#222;--muted:#666}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial,sans-serif;background:#fff;color:var(--dark);margin:0;line-height:1.4}
+    header{padding:28px 20px;text-align:center;border-bottom:1px solid #f0f0f0}
+    .brand{font-size:28px;font-weight:700}
+    .tag{color:var(--muted);margin-top:6px}
+    .hero{display:flex;gap:28px;align-items:center;justify-content:center;padding:30px 20px}
+    .hero .photo{max-width:520px;width:50%;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+    .hero .photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .hero .cta{width:420px}
+    h1{margin:0 0 8px;font-size:28px}
+    p.lead{margin:0 0 16px;color:var(--muted)}
+    .btn{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--accent);color:#fff;font-weight:600;text-decoration:none}
+
+    main{max-width:1000px;margin:28px auto;padding:0 16px}
+    .section{margin-bottom:28px}
+    .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .card{border:1px solid #f0f0f0;padding:12px;border-radius:10px;background:#fff}
+    .card h3{margin:0 0 6px;font-size:16px}
+    .card .price{color:var(--muted);font-weight:700}
+    .card .actions{margin-top:10px;display:flex;gap:8px;align-items:center}
+    .small-btn{padding:8px 10px;border-radius:8px;border:1px solid #eee;background:#fafafa;cursor:pointer}
+    .add-btn{background:#fff;border:1px solid var(--accent);color:var(--accent);font-weight:700}
+
+    /* Cart bar */
+    .cart-bar{position:fixed;left:20px;right:20px;bottom:22px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 12px 30px rgba(20,20,20,0.08);display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .cart-items{display:flex;gap:10px;align-items:center}
+    .badge{background:var(--accent);color:#fff;padding:6px 10px;border-radius:999px;font-weight:700}
+
+    /* Floating whatsapp */
+    .whatsapp-fab{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,0.18);z-index:60}
+    .whatsapp-fab a{color:#fff;text-decoration:none;font-size:24px;font-weight:700}
+
+    footer{padding:26px 16px;text-align:center;border-top:1px solid #f3f3f3;color:var(--muted);font-size:14px}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{flex-direction:column}
+      .hero .photo{width:100%}
+      .hero .cta{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Bonimini</div>
+    <div class="tag">Os melhores salgados de Bonito-MS!</div>
+  </header>
+
+  <section class="hero">
+    <div class="photo">
+      <img src="https://images.unsplash.com/photo-1604908177606-1a5ecb8a0e52?q=80&w=1400&auto=format&fit=crop&ixlib=rb-4.0.3&s=1c2c2a0f2b8f0e2c3b1f6b8c8e7b4f2a" alt="Folhados e salgados"/>
+    </div>
+    <div class="cta">
+      <h1>Bem-vindo à Bonimini</h1>
+      <p class="lead">Os melhores salgados de Bonito-MS! Peça pelo WhatsApp e receba quentinho.</p>
+      <p><a class="btn" id="main-order-btn" href="#">Fazer Pedido no WhatsApp</a></p>
+    </div>
+  </section>
+
+  <main>
+    <section class="section" id="cardapio">
+      <h2>Cardápio</h2>
+      <div class="menu-grid" id="menu-list">
+        <!-- items injected by JS -->
+      </div>
+    </section>
+
+    <section class="section" id="info">
+      <h2>Entregas e Contato</h2>
+      <p>📍 Atendemos Bonito-MS e região.</p>
+      <p>⏰ Segunda a Sábado, das 7h às 20h.</p>
+      <p>📞 WhatsApp: (67) 9 9195-9703</p>
+      <p>📸 Instagram: <em>adicione seu perfil depois</em></p>
+    </section>
+  </main>
+
+  <div class="cart-bar" id="cart-bar" style="display:none">
+    <div class="cart-items">
+      <div style="font-weight:700">Seu pedido</div>
+      <div class="badge" id="cart-count">0</div>
+      <div id="cart-summary" style="color:var(--muted)"></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="small-btn" id="clear-cart">Limpar</button>
+      <button class="btn" id="send-order">Enviar pro WhatsApp</button>
+    </div>
+  </div>
+
+  <div class="whatsapp-fab" title="Pedir pelo WhatsApp">
+    <a id="fab-link" href="https://wa.me/556791959703?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20dos%20salgados%20Bonimini%20%F0%9F%8D%8B" target="_blank">💬</a>
+  </div>
+
+  <footer>
+    © Bonimini — Bonito-MS · Feito com ♥ para salgados
+  </footer>
+
+  <script>
+    // Dados do cardápio (editar aqui se quiser alterar preços/itens)
+    const menu = [
+      {id:1,name:'COXINHA DE FRANGO',price:0.75},
+      {id:2,name:'BOLINHA DE PRESUNTO E QUEIJO',price:0.75},
+      {id:3,name:'ENROLADINHO DE SALSICHA',price:0.75},
+      {id:4,name:'BOLINHA DE QUEIJO',price:0.75},
+      {id:5,name:'PASTELZINHO DE CARNE',price:0.75}
+    ];
+
+    const cart = {};
+
+    function formatBRL(v){
+      return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    }
+
+    function renderMenu(){
+      const container = document.getElementById('menu-list');
+      container.innerHTML = '';
+      menu.forEach(item=>{
+        const el = document.createElement('div');
+        el.className='card';
+        el.innerHTML = `
+          <h3>${item.name}</h3>
+          <div class="price">R$ ${formatBRL(item.price)}</div>
+          <div class="actions">
+            <button class="small-btn" onclick="addToCart(${item.id})">Adicionar</button>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    function addToCart(id){
+      const item = menu.find(m=>m.id===id);
+      if(!item) return;
+      if(!cart[id]) cart[id]={...item,qty:0};
+      cart[id].qty += 1;
+      updateCartUI();
+    }
+
+    function updateCartUI(){
+      const count = Object.values(cart).reduce((s,it)=>s+it.qty,0);
+      const total = Object.values(cart).reduce((s,it)=>s+it.qty*it.price,0);
+      if(count>0){
+        document.getElementById('cart-bar').style.display='flex';
+        document.getElementById('cart-count').innerText = count;
+        document.getElementById('cart-summary').innerText = `Total: R$ ${formatBRL(total)}`;
+      } else {
+        document.getElementById('cart-bar').style.display='none';
+      }
+    }
+
+    document.getElementById('clear-cart').addEventListener('click',()=>{
+      for(let k in cart) delete cart[k];
+      updateCartUI();
+    });
+
+    // monta mensagem e abre whatsapp
+    document.getElementById('send-order').addEventListener('click',()=>{
+      sendWhatsAppOrder();
+    });
+
+    document.getElementById('main-order-btn').addEventListener('click', (e)=>{
+      e.preventDefault();
+      // se tiver itens no carrinho envia esse, se não, abre whatsapp com texto generico
+      sendWhatsAppOrder();
+    });
+
+    function sendWhatsAppOrder(){
+      const phone = '556791959703'; // Bonimini
+      const base = 'https://wa.me/' + phone + '?text=';
+      const items = Object.values(cart);
+      if(items.length===0){
+        const msg = encodeURIComponent('Olá! Quero fazer um pedido dos salgados Bonimini.');
+        window.open(base + msg, '_blank');
+        return;
+      }
+      let text = 'Olá! Quero fazer um pedido:%0A';
+      let total = 0;
+      items.forEach(it=>{
+        text += `- ${it.qty} x ${it.name} - R$ ${formatBRL(it.price * it.qty)}%0A`;
+        total += it.price * it.qty;
+      });
+      text += `%0ATotal: R$ ${formatBRL(total)}%0A%0AEndereço (ou ponto de referência):%0ATelefone para contato:`;
+      window.open(base + encodeURIComponent(text), '_blank');
+    }
+
+    // Inicializa
+    renderMenu();
+    updateCartUI();
+  </script>
+</body>
+</html>
